@@ -1,0 +1,49 @@
+﻿@model DeveloperClient.Models.Developer;
+
+<div class="container">
+    <form asp-action="Editar">
+        <input type="number" asp-for="DeveloperId" hidden />
+        <input asp-for="CreatedBy" hidden />
+        <input asp-for="CreatedDate" hidden />
+        <input asp-for="Enabled" hidden />
+        <input asp-for="ModifiedBy" hidden />
+        <input asp-for="ModifiedDate" hidden />
+        <div class="form-group">
+            <label asp-for="FirstName" class="control-la"></label>
+            <input type="text" class="form-control" asp-for="FirstName" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="SecondName" class="control-la"></label>
+            <input type="text" class="form-control" asp-for="SecondName" />
+            <span asp-validation-for="SecondName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FirstSurname" class="control-la"></label>
+            <input type="text" class="form-control" asp-for="FirstSurname" />
+            <span asp-validation-for="FirstSurname" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="SecondSurname" class="control-la"></label>
+            <input type="text" class="form-control" asp-for="SecondSurname" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Phone" class="control-la"></label>
+            <input type="text" class="form-control" asp-for="Phone" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email" class="control-la"></label>
+            <input type="text" class="form-control" asp-for="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div>
+            <input type="submit" value="Editar" class="btn btn-warning" />
+            <a asp-action="Index" class="btn btn-dark">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

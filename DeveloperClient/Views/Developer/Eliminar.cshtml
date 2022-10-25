@@ -1,0 +1,34 @@
+﻿@model DeveloperClient.Models.Developer;
+
+<div class="container">
+    <form asp-action="Eliminar">
+        <div class="form-group">
+            <label asp-for="FirstName" class="control-la"></label>
+            <input type="text" class="form-control" asp-for="FirstName" disabled/>
+        </div>
+        <div class="form-group">
+            <label asp-for="SecondName" class="control-la"></label>
+            <input type="text" class="form-control" asp-for="SecondName" disabled/>
+        </div>
+        <div class="form-group">
+            <label asp-for="FirstSurname" class="control-la"></label>
+            <input type="text" class="form-control" asp-for="FirstSurname" disabled/>
+        </div>
+        <div class="form-group">
+            <label asp-for="SecondSurname" class="control-la"></label>
+            <input type="text" class="form-control" asp-for="SecondSurname" disabled/>
+        </div>
+        <div class="form-group">
+            <label asp-for="Phone" class="control-la"></label>
+            <input type="text" class="form-control" asp-for="Phone" disabled/>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email" class="control-la"></label>
+            <input type="text" class="form-control" asp-for="Email" disabled />
+        </div>
+        <div>
+            <input type="submit" value="Eliminar" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-dark">Cancelar</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<DeveloperClient.Models.Developer>
+
+
+<div class="container">
+    <h1>Active Developers</h1>
+
+    <div>
+        <a asp-action="Crear" class="btn btn-primary">Crear</a>
+    </div>
+
+    <br />
+    
+    <table class="table table-bordered">
+        <tr>
+            <td>Id</td>
+            <td>First Name</td>
+            <td>Second Name</td>
+            <td>First surname</td>
+            <td>Second surname</td>
+            <td>Phone</td>
+            <td>Email</td>
+            <td>Created By</td>
+            <td>Created Date</td>
+            <td>Acciones</td>
+        </tr>
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeveloperId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SecondName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstSurname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SecondSurname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td class="d-flex">
+            @Html.ActionLink("Detalles", "Detalles", new { id = item.DeveloperId }, new { @class = "btn btn-info" }) | 
+            @Html.ActionLink("Eliminar", "Eliminar", new { id = item.DeveloperId }, new { @class = "btn btn-danger" }) | 
+            @Html.ActionLink("Editar", "Editar", new { id = item.DeveloperId }, new { @class = "btn btn-success" })
+        </td>
+    </tr>
+        }
+    </table>
+
+</div>
