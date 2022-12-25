@@ -13,6 +13,13 @@ namespace DeveloperAPI.Controllers
     [ApiController]
     public class DeveloperController : ControllerBase
     {
+        private readonly DeveloperEvaluationBKContext db;
+
+        public DeveloperController()
+        {
+            db = new DeveloperEvaluationBKContext();
+        }
+
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Developer developer)
         {
@@ -29,18 +36,17 @@ namespace DeveloperAPI.Controllers
                     throw new Exception("No autorizado");
                 }
 
-                using (DeveloperEvaluationBKContext db = new DeveloperEvaluationBKContext())
-                {
-                    var security = await db.Securities.FirstOrDefaultAsync(s => s.SecurityId == int.Parse(securityId));
+                var security = await db.Securities.FirstOrDefaultAsync(s => s.SecurityId == int.Parse(securityId));
 
-                    if (security.SecurityId != int.Parse(securityId) || security.SecurityKey != securityKey)
-                    {
-                        throw new Exception("No autorizado");
-                    }
-                    db.Developers.Add(developer);
-                    await db.SaveChangesAsync();
-                    return Ok();
+                if (security.SecurityId != int.Parse(securityId) || security.SecurityKey != securityKey)
+                {
+                    throw new Exception("No autorizado");
                 }
+
+                db.Developers.Add(developer);
+                await db.SaveChangesAsync();
+                return Ok();
+
             }
             catch (Exception ex)
             {
@@ -49,7 +55,7 @@ namespace DeveloperAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
             try
             {
@@ -58,31 +64,25 @@ namespace DeveloperAPI.Controllers
                 Request.Headers.TryGetValue("SecurityId", out var securityId);
                 Request.Headers.TryGetValue("SecurityKey", out var securityKey);
 
-                if (String.IsNullOrEmpty( securityId )|| String.IsNullOrEmpty( securityKey))
+                if (String.IsNullOrEmpty(securityId) || String.IsNullOrEmpty(securityKey))
                 {
                     throw new Exception("No autorizado");
                 }
 
-                using (DeveloperEvaluationBKContext db = new DeveloperEvaluationBKContext())
+                var security = await db.Securities.FirstOrDefaultAsync(s => s.SecurityId == int.Parse(securityId));
+
+                if (security.SecurityId != int.Parse(securityId) || security.SecurityKey != securityKey)
                 {
-                    var security = db.Securities.FirstOrDefault(s => s.SecurityId == int.Parse(securityId));
-
-                    if (security.SecurityId != int.Parse( securityId )|| security.SecurityKey != securityKey)
-                    {
-                        throw new Exception("No autorizado");
-                    }
-
-                    var devs = db.Developers.ToList();
-                    developers = (from de in devs
-                                 where de.Enabled == true
-                                 select de).ToList();
+                    throw new Exception("No autorizado");
                 }
+
+                developers = db.Developers.FromSqlRaw("EXEC SP_GetDevelopers");
 
                 return Ok(developers);
             }
             catch (Exception ex)
             {
-               return BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -101,19 +101,16 @@ namespace DeveloperAPI.Controllers
                     throw new Exception("No autorizado");
                 }
 
-                using (DeveloperEvaluationBKContext db = new DeveloperEvaluationBKContext())
+                var security = db.Securities.FirstOrDefault(s => s.SecurityId == int.Parse(securityId));
+
+                if (security.SecurityId != int.Parse(securityId) || security.SecurityKey != securityKey)
                 {
-                    var security = db.Securities.FirstOrDefault(s => s.SecurityId == int.Parse(securityId));
-
-                    if (security.SecurityId != int.Parse(securityId) || security.SecurityKey != securityKey)
-                    {
-                        throw new Exception("No autorizado");
-                    }
-
-                    developer = db.Developers.FirstOrDefault(d => d.DeveloperId == id);
+                    throw new Exception("No autorizado");
                 }
 
-                return Ok( developer);
+                developer = db.Developers.FirstOrDefault(d => d.DeveloperId == id);
+
+                return Ok(developer);
             }
             catch (Exception ex)
             {
@@ -136,31 +133,28 @@ namespace DeveloperAPI.Controllers
                     throw new Exception("No autorizado");
                 }
 
-                using (DeveloperEvaluationBKContext db = new DeveloperEvaluationBKContext())
+                var security = db.Securities.FirstOrDefault(s => s.SecurityId == int.Parse(securityId));
+
+                if (security.SecurityId != int.Parse(securityId) || security.SecurityKey != securityKey)
                 {
-                    var security = db.Securities.FirstOrDefault(s => s.SecurityId == int.Parse(securityId));
-
-                    if (security.SecurityId != int.Parse(securityId) || security.SecurityKey != securityKey)
-                    {
-                        throw new Exception("No autorizado");
-                    }
-
-                    var dev = db.Developers.FirstOrDefault(d => d.DeveloperId == id);
-                    dev.FirstName = developer.FirstName;
-                    dev.SecondName = developer.SecondName;
-                    dev.FirstSurname = developer.FirstSurname;
-                    dev.SecondSurname = developer.SecondSurname;
-                    dev.Phone = developer.Phone;
-                    dev.Email = developer.Email;
-                    dev.ModifiedBy = "";
-                    dev.ModifiedDate = DateTime.Now;
-                    dev.Enabled = developer.Enabled;
-
-                    db.Update(dev);
-                    await db.SaveChangesAsync();
-                    return Ok();
+                    throw new Exception("No autorizado");
                 }
-                
+
+                var dev = db.Developers.FirstOrDefault(d => d.DeveloperId == id);
+                dev.FirstName = developer.FirstName;
+                dev.SecondName = developer.SecondName;
+                dev.FirstSurname = developer.FirstSurname;
+                dev.SecondSurname = developer.SecondSurname;
+                dev.Phone = developer.Phone;
+                dev.Email = developer.Email;
+                dev.ModifiedBy = "";
+                dev.ModifiedDate = DateTime.Now;
+                dev.Enabled = developer.Enabled;
+
+                db.Update(dev);
+                await db.SaveChangesAsync();
+                return Ok();
+
             }
             catch (Exception ex)
             {
@@ -181,29 +175,24 @@ namespace DeveloperAPI.Controllers
                     throw new Exception("No autorizado");
                 }
 
-                using (DeveloperEvaluationBKContext db = new DeveloperEvaluationBKContext())
+                var security = db.Securities.FirstOrDefault(s => s.SecurityId == int.Parse(securityId));
+
+                if (security.SecurityId != int.Parse(securityId) || security.SecurityKey != securityKey)
                 {
-                    var security = db.Securities.FirstOrDefault(s => s.SecurityId == int.Parse(securityId));
-
-                    if (security.SecurityId != int.Parse(securityId) || security.SecurityKey != securityKey)
-                    {
-                        throw new Exception("No autorizado");
-                    }
-
-                    var dev = db.Developers.FirstOrDefault(d => d.DeveloperId == id);
-                    dev.Enabled = false;
-
-                    db.Update(dev);
-                    await db.SaveChangesAsync();
-                    return Ok();
+                    throw new Exception("No autorizado");
                 }
+
+                var dev = db.Developers.FirstOrDefault(d => d.DeveloperId == id);
+                dev.Enabled = false;
+
+                db.Update(dev);
+                await db.SaveChangesAsync();
+                return Ok();
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
-
     }
 }

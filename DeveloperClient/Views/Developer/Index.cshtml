@@ -9,7 +9,7 @@
     </div>
 
     <br />
-    
+
     <table class="table table-bordered">
         <tr>
             <td>Id</td>
@@ -25,40 +25,40 @@
         </tr>
         @foreach (var item in Model)
         {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeveloperId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SecondName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstSurname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SecondSurname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td class="d-flex">
-            @Html.ActionLink("Detalles", "Detalles", new { id = item.DeveloperId }, new { @class = "btn btn-info" }) | 
-            @Html.ActionLink("Eliminar", "Eliminar", new { id = item.DeveloperId }, new { @class = "btn btn-danger" }) | 
-            @Html.ActionLink("Editar", "Editar", new { id = item.DeveloperId }, new { @class = "btn btn-success" })
-        </td>
-    </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeveloperId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SecondName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstSurname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SecondSurname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td class="d-flex">
+                    @Html.ActionLink("Detalles", "Detalles", new { id = item.DeveloperId }, new { @class = "btn btn-info" }) |
+                    @Html.ActionLink("Eliminar", "Eliminar", new { id = item.DeveloperId }, new { @class = "btn btn-danger" }) |
+                    @Html.ActionLink("Editar", "Editar", new { id = item.DeveloperId }, new { @class = "btn btn-success" })
+                </td>
+            </tr>
         }
     </table>
 
